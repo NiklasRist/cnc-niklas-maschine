@@ -1,0 +1,18 @@
+input:
+  label: "mqtt_in"
+  mqtt:
+    urls:
+      - "mqtt://mqtt_broker:1883"
+    client_id: "redis-hydration-18e694e4-6eb7-4298-bc60-asdf"
+    keepalive: 60
+    clean_session: true
+    topics:
+      - "uns-v1/Factory A/+/+/+/MachineStatus"
+
+output:
+  label: "kafka_out"
+  kafka:
+    addresses:
+      - "redpanda_broker:9092"
+    topic: "usecase_hydration"
+    key: ${! meta("mqtt_topic") }

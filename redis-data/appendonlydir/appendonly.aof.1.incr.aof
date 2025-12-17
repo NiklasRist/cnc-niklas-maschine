@@ -1,0 +1,18 @@
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+SET
+$22
+machine:energy:context
+$186
+{
+  "plant": "Linz Metal Works",
+  "energyZone": "Grid-Segment-4",
+  "maintenanceTeam": "Team Gamma",
+  "maintenanceInterval": "Every 300 hours",
+  "machineCategory": "EnergyOptimized"
+}

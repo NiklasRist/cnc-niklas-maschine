@@ -1,0 +1,23 @@
+input:
+  label: "mqtt_input"
+  mqtt:
+    urls:
+      - "mqtt://mqtt_broker:1883"
+    client_id: "redis-hydration-f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
+    keepalive: 60
+    clean_session: true
+    topics:
+      - "#" # Alle Topics lesen – kannst du auf einen bestimmten Namen ändern
+
+pipeline:
+  processors:
+    - mapping: | #look at bloblang playground on redpanda
+        root = this
+
+output:
+  label: "redis_out"
+  redis_hash:
+    url: "redis://redis_container:6379"
+    key: ${! meta("topic") }
+    walk_metadata: false
+    walk_json_object: false

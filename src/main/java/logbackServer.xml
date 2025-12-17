@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- Configuring logging is outside of the SDK's scope as the SDK itself 
+		only depends on the SFL4J API. Applications will chose their own logging 
+		frameworks from any SLF4J compatible ones. For the purposes of this sample, 
+		this is an example of using Logback as the logging library, see more at https://logback.qos.ch/manual/. -->
+	<appender name="CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!-- Read options at https://logback.qos.ch/manual/appenders.html#ConsoleAppender -->
+		<encoder>
+			<!-- # The conversion pattern uses format specifiers. You might want to 
+				# change the pattern an watch the output format change. -->
+			<!-- https://logback.qos.ch/manual/layouts.html -->
+			<pattern>%date{ISO8601} %-5p [%t] %37c - %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- Read options at https://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<file>SampleConsoleServer.java.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- Daily rollover -->
+			<fileNamePattern>/logs/%d{yyyy-MM,aux}/SampleConsoleServer.java-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+
+			<!-- Each file should be at most 50MB, keep 60 days worth of history, 
+				but at most 10GB -->
+			<maxFileSize>50MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>10GB</totalSizeCap>
+		</rollingPolicy>
+
+		<encoder>
+			<!-- # The conversion pattern uses format specifiers. You might want to 
+				# change the pattern an watch the output format change. -->
+			<!-- https://logback.qos.ch/manual/layouts.html#ClassicPatternLayout -->
+			<pattern>%date{ISO8601} %-5p [%t] %37c - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Default logging level -->
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<!-- Uncomment this to also log to a file per above appender configuration -->
+		<!-- <appender-ref ref="FILE" /> -->
+	</root>
+
+	<!-- # Prosys SDK messages, change to WARN/ERROR to see less or DEBUG/TRACE -->
+	<logger name="com.prosysopc.ua" level="INFO" />
+
+	<!-- # Stack layer messages -->
+	<logger name="com.prosysopc.ua.stack" level="ERROR" />
+</configuration>
